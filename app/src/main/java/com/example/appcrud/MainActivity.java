@@ -9,10 +9,12 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.example.appcrud.Modelos.CadastroModelo;
+
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
-    private ArrayList<String> mCadastros;
+    private ArrayList<CadastroModelo> mCadastros;
 
     private ListView mLvCadastros;
 
@@ -29,24 +31,30 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     protected void onResume(){
         super.onResume();
 
-        mCadastros = new ArrayList<String>();
-
+        mCadastros = new ArrayList<CadastroModelo>();
         for (int i = 1; i <= 30; i++) {
-            mCadastros.add(String.format("Item %d", i));
+            mCadastros.add(new CadastroModelo(i, String.format("Item %d", i), String.format("Descrição %d", i)));
+        }
+
+        ArrayList<String> lvItens = new ArrayList<String>();
+
+        for (CadastroModelo cad : mCadastros){
+            lvItens.add(cad.getNome());
         }
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1,
-                mCadastros);
+                lvItens);
 
         mLvCadastros.setAdapter(adapter);
     }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+        CadastroModelo cadastro = mCadastros.get(position);
 
         Intent intent = new Intent(this, AlteraExcluiActivity.class);
+        intent.putExtra("ID", cadastro.getId());
         startActivity(intent);
     }
 
