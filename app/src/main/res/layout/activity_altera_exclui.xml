@@ -17,11 +17,19 @@
         android:layout_marginBottom="10dp">
 
         <TextView
+            android:id="@+id/tvCodigo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="18sp"
             android:textColor="@color/colorPrimaryDark"
-            android:text="Campo 1" />
+            android:layout_marginBottom="20dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:textColor="@color/colorPrimaryDark"
+            android:text="Nome" />
 
         <EditText
             android:id="@+id/etCampo1"
@@ -29,15 +37,14 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:textColor="@color/colorAccent"
-            android:inputType="textPersonName"
-            android:text="Nome" />
+            android:inputType="textPersonName"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="18sp"
             android:textColor="@color/colorPrimaryDark"
-            android:text="Campo 2" />
+            android:text="Descrição" />
 
         <EditText
             android:id="@+id/etCampo2"
@@ -45,8 +52,7 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:textColor="@color/colorAccent"
-            android:inputType="textPersonName"
-            android:text="Descrição" />
+            android:inputType="textPersonName"/>
 
     </LinearLayout>
 

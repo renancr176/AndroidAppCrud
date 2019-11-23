@@ -9,12 +9,15 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.example.appcrud.Modelos.CadastroModelo;
+import com.example.appcrud.Banco.AppBanco;
+import com.example.appcrud.Modelos.Cadastro;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
-    private ArrayList<CadastroModelo> mCadastros;
+    private AppBanco mDb;
+    private List<Cadastro> mCadastros;
 
     private ListView mLvCadastros;
 
@@ -22,6 +25,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        mDb = AppBanco.getInstance(this);
 
         mLvCadastros = findViewById(R.id.lvCadastros);
         mLvCadastros.setOnItemClickListener(this);
@@ -31,15 +36,12 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     protected void onResume(){
         super.onResume();
 
-        mCadastros = new ArrayList<CadastroModelo>();
-        for (int i = 1; i <= 30; i++) {
-            mCadastros.add(new CadastroModelo(i, String.format("Item %d", i), String.format("Descrição %d", i)));
-        }
+        mCadastros = mDb.getCadastroDao().listaCadastros();
 
         ArrayList<String> lvItens = new ArrayList<String>();
 
-        for (CadastroModelo cad : mCadastros){
-            lvItens.add(cad.getNome());
+        for (Cadastro cad : mCadastros){
+            lvItens.add(String.format("%d - %s", cad.getID(), cad.getNome()));
         }
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
@@ -51,10 +53,10 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        CadastroModelo cadastro = mCadastros.get(position);
+        Cadastro cadastro = mCadastros.get(position);
 
         Intent intent = new Intent(this, AlteraExcluiActivity.class);
-        intent.putExtra("ID", cadastro.getId());
+        intent.putExtra("ID", cadastro.getID());
         startActivity(intent);
     }
 
